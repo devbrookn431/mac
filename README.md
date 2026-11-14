@@ -1,130 +1,108 @@
-# Mac 上的 Clash 客户端怎么选
+# ClashX Pro 停更后：Mac 上的 Clash 客户端怎么换
 
-clashx、clashx pro 与 clash for mac 这几个写法需要对应具体项目，clash mac 不是一份统一的系统要求。本文从原 ClashX 的公开访问记录出发，分别核对 Mac 客户端的平台门槛、包形态和配置管理，不用同名关系补兼容结论。
+这页整理 ClashX 系列的仓库现状，以及五个 Mac 客户端的系统要求、内核和配置迁移说明。核对日为 2026-11-14，仓库状态以对应项目仓库为准，版本与日期以各项目发布页当天显示为准。迁移信息以各客户端 README 为准。
 
-## 原 ClashX 与 Pro 字样的资料缺口先保留
+---
 
-原 ClashX 的仓库及发布源在 2026-10-23 的匿名读取中都返回 HTTP 404。能写出的只是这个结果，不能据此确定仓库归档状态、最近发布、具体改名或访问失败原因。页面未取得的项目介绍，也不能由旧印象填回。
+[![核对](https://img.shields.io/badge/%E6%A0%B8%E5%AF%B9-2026--11--14-7c5cff)](#toc) [![主题](https://img.shields.io/badge/%E4%B8%BB%E9%A2%98-ClashX%20Pro-2f7bea)](#toc) [![形式](https://img.shields.io/badge/%E5%BD%A2%E5%BC%8F-%E6%97%B6%E9%97%B4%E7%BA%BF%20%2B%20%E6%B8%85%E5%8D%95-6f56d9)](#toc) [![出处](https://img.shields.io/badge/%E5%87%BA%E5%A4%84-%E9%A1%B9%E7%9B%AE%E4%BB%93%E5%BA%93%E4%B8%8E%E5%8F%91%E5%B8%83%E9%A1%B5-1fa37a)](#toc)
 
-ClashX Pro 的官方页面说明没有在资料中读到。因此本文不为 Pro 补版本、许可证、功能增减或获取渠道，也不把一个相似名字当成原 ClashX 的已确认分支。名称可以记录，归属和能力仍需要自己的资料。
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="images/banner-dark.svg">
+    <img src="images/banner.svg" alt="ClashX Pro 停更后：Mac 上的 Clash 客户端怎么换，时间线、替代客户端与迁移清单" width="100%">
+  </picture>
+</p>
 
-另有 ClashX.Meta 项目，其名称、发布与 README 需要分别看。已有 README 文本呈现的是原 ClashX 介绍，并未明确写出 Meta、mihomo 的对应关系。不能因为仓库名带 Meta 就用别的客户端说明替它补内核声明。
+> [!NOTE]
+> 📌 本页只整理停更时间点、替代客户端的出处与对照和迁移步骤，不提供旧版安装包、订阅链接或配置模板。
+>
+> 🔎 每一行都带出处链接；日期和版本号以各项目仓库、发布页当天显示为准，本页核对日 2026-11-14。
+>
+> ⚠️ 表里标「待核」的行，是本页没有读到原文的内容，不要当结论用。
 
-[ClashX 仓库](https://github.com/yichengchen/clashX) 对应原项目资料，[ClashX.Meta 官方发布页](https://github.com/MetaCubeX/ClashX.Meta/releases) 对应另一个项目的发布入口。分清两个入口之后，404 不再被误写成另一个项目的发布状态，某个项目的更新也不会替另一项目宣布恢复。
+> 标签说明：`官方` 取自项目仓库、发布页或归档说明 · `自述` 客户端自己的 README 或说明里的说法 · `待核` 本页没有读到原文，不当结论用
 
-## Mac 平台名称要继续拆成系统与架构
+<a id="toc"></a>
+## 📋 目录导航
 
-Clash Verge Rev 的 README 把 macOS 门槛写为 11 及以上，文档安装页则写 12 及以上，并另列 macOS 11 的内核处理说明。两边都应在记录中出现，不能从其中选一个作为本文替所有版本作出的兼容结论。
+- [🕰 时间线](#shijian) · [💻 替代客户端](#tidai) · [📋 迁移清单](#qianyi) · [🔤 旧名称](#jiuming)
 
-FlClash 的平台资料写 macOS 12 及以上，列有 Apple Silicon、Intel 两种架构。Verge 的 macOS 资产也区分架构，文件形态不完全相同。即使都叫 Mac 应用，系统门槛与处理器对应关系仍需分别读取。
+<a id="shijian"></a>
+## 停更时间线
 
-ClashX.Meta 的平台栏为 macOS，但没有取得可用于本文的明确最低系统门槛。Clash Party 的 README 只在所读内容中说明 Electron 图形界面，没有列完整平台表。缺少项目不能由其他 Mac 客户端的要求替代。
+*给想先弄清 ClashX 与 ClashX Pro 是什么时候停的人看。*
 
-| 项目 | 已有 Mac 资料 | 保留的限制 |
-| --- | --- | --- |
-| ClashX.Meta | macOS 平台、发布记录 | 最低系统版本没有明确资料 |
-| Clash Verge Rev | README 与安装页各有门槛 | 11 与 12 两种表述并列 |
-| FlClash | macOS 12 起、两类架构 | 按项目自己的平台资料阅读 |
-| Clash Party | 图形界面项目介绍 | 不从框架名称补平台清单 |
+*相关：[替代客户端对照](#tidai)*
 
-这张表没有进行安装验证。它整理页面给出的信息和空缺，不以空缺评价某个项目，也不为未知平台门槛造一个数字。
+下表记录仓库状态、提交日期和发布日期。ClashX Pro 的停更日期，官方没有说明。
 
-## 版本记录先区分稳定页和发布源
+| 日期 | 事项 | 对应项目 | 出处 | 标签 |
+| --- | --- | --- | --- | --- |
+| 2026-11-14 | 核对日页面返回 404；官方没有说明原因 | Dreamacro/clash | [仓库页面](https://github.com/Dreamacro/clash) | `待⁠核` |
+| 2026-11-14 | 核对日页面返回 404；官方没有说明原因 | yichengchen/clashX | [仓库页面](https://github.com/yichengchen/clashX) | `待⁠核` |
+| 2026-11-14 | 旧版 README 单列 Pro，称其支持增强模式与原生 Apple Silicon | ClashX Pro | [旧版 README](https://github.com/MetaCubeX/ClashX.Meta/blob/master/README.md) | `自⁠述` |
+| 2022-03-24 | 默认分支 master 的最近提交；该分支 README 仍称基于 Dreamacro/clash | ClashX.Meta：master 分支 | [提交记录](https://github.com/MetaCubeX/ClashX.Meta/commits/master)、[分支说明](https://github.com/MetaCubeX/ClashX.Meta/blob/master/README.md) | `官⁠方` |
+| 2026-11-13 | meta 分支最近提交与 v1.4.48 发布同日；该分支 README 称基于 Mihomo，仓库未归档 | ClashX.Meta：meta 分支 | [发布记录](https://github.com/MetaCubeX/ClashX.Meta/releases/tag/v1.4.48)、[分支说明](https://github.com/MetaCubeX/ClashX.Meta/blob/meta/README.md) | `官⁠方` |
+| 2023-10-31 | 最近发布 v1.3.8；仓库现已归档，README 为 Removed | Clash Verge | [仓库说明](https://github.com/zzzgydi/clash-verge) | `官⁠方` |
 
-截至 2026-10-23，官方页面显示 ClashX.Meta 的发布源首个带版本条目为 v1.4.47，时间在 2026-10-21，以官方页面为准。这个记录能确定发布名，不自动确认 README 没写出的内核关系。项目身份和发布读数需要并列保留。
+**[⬆ 回到目录](#toc)**
 
-截至 2026-10-22，官方页面显示 Verge Rev 为 v2.5.8，日期是 2026-10-09，以官方页面为准。其发布资料用 [Clash Verge Rev 官方发布页](https://github.com/clash-verge-rev/clash-verge-rev/releases) 标记，不将该客户端版本当成 macOS 的版本门槛。版本号形态相似，也不表示可以在两类栏目间替换。
+<a id="tidai"></a>
+## 替代客户端对照
 
-FlClash 的稳定页在 2026-10-22 记录为 v0.9.1，2026-10-23 发布源又出现 v0.9.2-pre.2。后者带预发布性质，不能省去 pre 后覆盖前者的稳定记录。两种来源回答的都是各自时点与发布轨道的问题。
+*给要在 Mac 上换客户端、想先看芯片和系统门槛的人看。*
 
-Clash Party 的记录为 v2.0.4，发布日期为 2026-10-18，所用资料时点为 2026-10-22。[Clash Party 官方发布页](https://github.com/mihomo-party-org/clash-party/releases) 与 [FlClash 官方发布页](https://github.com/chen08209/FlClash/releases) 分别保留入口；这些数字不组成更新快慢或使用次序的比较。
+*相关：[停更时间线](#shijian)、[迁移清单](#qianyi)*
 
-## 安装形态不是配置文件格式
+系统与内核信息来自各客户端 README，最近发布信息截至核对日。ClashX Meta 的默认分支保留旧 ClashX 说明，下表采用 meta 分支 README。
 
-Verge 的 macOS 发布资产列出 DMG，也有供更新使用的 .app.tar.gz，两类都区分 x64、aarch64。它们属于应用发布文件，不是可直接当作规则或订阅读入的配置。文件后缀回答发布形态，不直接说明数据如何迁移。
+| 客户端 | 芯片与系统 | 内核与最近发布日 | 出处 | 标签 |
+| --- | --- | --- | --- | --- |
+| ClashX Meta | 仅写 for Mac；芯片与最低系统版本 README 未写明 | Mihomo Core；v1.4.48，2026-11-13 | [README](https://github.com/MetaCubeX/ClashX.Meta/blob/meta/README.md)、[发布记录](https://github.com/MetaCubeX/ClashX.Meta/releases/tag/v1.4.48) | `自⁠述` |
+| Clash Verge Rev | macOS 11+；Intel / Apple | Clash.Meta（mihomo）；可切换 Alpha 内核；v2.5.10，2026-11-03 | [README](https://github.com/clash-verge-rev/clash-verge-rev/blob/dev/README.md)、[发布记录](https://github.com/clash-verge-rev/clash-verge-rev/releases) | `自⁠述` |
+| Clash Party | 系统与芯片要求 README 未写明 | Smart 与 Mihomo（Clash Meta）；v2.0.4，2026-10-18 | [README](https://github.com/mihomo-party-org/clash-party/blob/smart_core/README.md)、[发布记录](https://github.com/mihomo-party-org/clash-party/releases) | `自⁠述` |
+| FlClash | macOS 12 及以上；Apple Silicon / Intel | mihomo（Clash.Meta）；v0.9.3，2026-11-04 | [README](https://github.com/chen08209/FlClash/blob/main/README.md)、[发布记录](https://github.com/chen08209/FlClash/releases) | `自⁠述` |
+| Clash Mi | macOS 12 及以上；Intel / Apple Silicon | Mihomo（Clash.Meta）；v1.0.32.1803，2026-11-03 | [README](https://github.com/KaringX/clashmi/blob/main/README.md)、[发布记录](https://github.com/KaringX/clashmi/releases) | `自⁠述` |
 
-FlClash 的 Mac 发布资料列 DMG，项目还写有 Homebrew 渠道。这里仅记项目声明存在的渠道类型，不提供具体安装命令，不将它扩展为其他客户端共同分发方式。没有取得的安装器也不会从旧 Mac 软件资料中补造。
+**[⬆ 回到目录](#toc)**
 
-原 CFW 历史描述曾列 Windows、macOS、Linux，但它的历史包记录不是这些项目今天的安装说明。即使一个旧文件能在 Mac 上出现，也不能由本文推断适用于当前系统或目标客户端。旧安装程序和保存的配置需要继续分开。
+<a id="qianyi"></a>
+## 从 ClashX Pro 搬到新客户端的清单
 
-所以，准备资料时可区分应用包、客户端配置输入、应用偏好和备份。目标文档实际写了哪个对象，就在对应栏记录；本文没有一份官方跨项目转换表，不把上述类别拼成可直接迁移的全部清单。
+*给已经决定换客户端、想按项目逐项搬的人看。*
 
-## 配置输入只按目标应用的承诺判断
+*相关：[替代客户端对照](#tidai)、[旧名称与易混写法](#jiuming)*
 
-Verge 的配置管理包括 Merge、Script、语法提示，也列有可视化节点和规则编辑。它的远程输入有直接导入地址、将地址作为配置输入和 URL Schemes，本地文件也有相应入口。这些功能属于目标应用，不会自动确认旧项目脚本能直接复用。
+下表列出 README 明确写出的配置位置、导入方式及管理功能。旧版 ClashX 的目录说明不能用来确认 ClashX Pro 的配置位置。
 
-FlClash 的说明将订阅地址与本地文件列为配置来源，另有配置编辑，以及规则、代理与代理组的自定义。它写 WebDAV、本地文件备份恢复，不等于承诺能读入另一个项目的备份。迁移记录应避免只写“支持备份”就把数据形式关系省掉。
+| 项目 | 怎么搬 | 注意 | 出处 | 标签 |
+| --- | --- | --- | --- | --- |
+| ClashX 旧版配置 | 默认目录为 `$HOME/.config/clash`，文件名为 `config.yaml`；Config 菜单可切换自定义配置 | 来自 master 分支旧说明；ClashX Pro 的目录，官方没有说明 | [旧版 README](https://github.com/MetaCubeX/ClashX.Meta/blob/master/README.md) | `自⁠述` |
+| ClashX Meta | 默认目录为 `$HOME/.config/clash.meta`，文件名为 `config.yaml`；README 列有 URL scheme 导入方式 | 目录与旧版 ClashX 不同；URL scheme 小节标注 May not work | [README](https://github.com/MetaCubeX/ClashX.Meta/blob/meta/README.md) | `自⁠述` |
+| FlClash | README 写明可从订阅或文件导入配置 | 列有系统代理、TUN 模式及 WebDAV、本地文件备份恢复 | [README](https://github.com/chen08209/FlClash/blob/main/README.md) | `自⁠述` |
+| Clash Verge Rev | 列有配置管理、Merge 和 Script 增强，以及 WebDAV 配置备份同步 | README 未写具体步骤；列有系统代理与 TUN 模式 | [README](https://github.com/clash-verge-rev/clash-verge-rev/blob/dev/README.md) | `自⁠述` |
+| Clash Party | 列有 WebDAV 备份恢复与覆写功能 | README 未写具体步骤；列有无需服务模式的 Tun | [README](https://github.com/mihomo-party-org/clash-party/blob/smart_core/README.md) | `自⁠述` |
+| Clash Mi | README 写明内核基于 YAML 配置运行，可使用订阅 | README 未写具体步骤；自带 zashboard 面板 | [README](https://github.com/KaringX/clashmi/blob/main/README.md) | `自⁠述` |
 
-ClashX.Meta 的所读 README 未明确给出与 Meta 内核的对应说明，不能用 Verge 的管理功能补它的界面能力。Clash Party 自述图形界面，也不能因此获得其他项目的导入路径。目标项目没有写明的行为在本文继续留空。
+**[⬆ 回到目录](#toc)**
 
-本页没有实际打开读者的配置文件。能够确认的是目标页面列了什么输入和管理项，而不是文件已经解析、规则已经生效或资源已经可连。没有过程记录时，不把迁移核对文字写成迁移完成报告。
+<a id="jiuming"></a>
+## 旧名称与易混写法
 
-## Mac 上的代理、模式和服务状态分开理解
+*给读旧资料、分不清 ClashX、ClashX Pro、ClashX Meta 的人看。*
 
-Verge 对系统代理的解释强调程序读取操作系统约定；TUN 接入依托虚拟网络接口。两种接入不属于规则、全局、直连这组三种出口模式。迁移时名字相同不等于全部相关选项来自同一个设置层。
+*相关：[停更时间线](#shijian)*
 
-规则模式根据配置匹配出口，全局用手动指定的节点，直连则采用本地网络。服务模式另外由独立进程启动内核，并给非管理员身份启动 TUN 提供方式。界面、内核、服务各有记录对象，不用退出窗口来代答服务是否已停止。
+<details>
+<summary>展开：旧名称与易混写法对照（附录性质，不含主表）</summary>
 
-Verge 文档默认栈写 GVisor，mihomo 英文配置页写默认 mips。两种文字都保留，不替它们安排统一默认；这份资料没有核对某个具体安装的当前栈。存在默认值差异，不成为本文评价某项目的理由。
+- ClashX、ClashX Pro、ClashX Meta：ClashX Meta README 提醒，这些客户端不附带代理服务器，也没有以这些名称设立的官方网站，并警示冒用官方身份的页面。[出处](https://github.com/MetaCubeX/ClashX.Meta/blob/meta/README.md)
+- ClashX 与 Clash：旧版 README 将 ClashX 描述为基于 Clash 的 Mac 规则代理客户端。[出处](https://github.com/MetaCubeX/ClashX.Meta/blob/master/README.md)
+- ClashX Pro 与 ClashX：旧版 README 为 Pro 单列说明，提到增强模式和原生 Apple Silicon 支持。[出处](https://github.com/MetaCubeX/ClashX.Meta/blob/master/README.md)
+- Clash Verge 与 Clash Verge Rev：Rev 的 README 将项目称为 Clash Verge 的延续；原 Clash Verge 仓库已归档。[Rev 说明](https://github.com/clash-verge-rev/clash-verge-rev/blob/dev/README.md)、[原仓库](https://github.com/zzzgydi/clash-verge)
+- Mihomo 与 Clash.Meta：旧仓库地址跳转到 Mihomo；客户端 README 中也有将这两个名称并列的写法。[内核仓库](https://github.com/MetaCubeX/mihomo)、[FlClash 说明](https://github.com/chen08209/FlClash/blob/main/README.md)
+- Mihomo Party 与 Clash Party：旧仓库地址跳转到 Clash Party，当前 README 使用 Clash Party 名称。[项目说明](https://github.com/mihomo-party-org/clash-party/blob/smart_core/README.md)
 
-防火墙说明针对内核程序的放行。本文不把关闭整个系统防火墙写成条件，也不由一个项目的要求推定全部 Mac 应用同样处理。应用资料里没有给出的操作路径，不从 Windows 或其他客户端复制。
+</details>
 
-## 对缺少说明的项目不补名称故事
-
-原 ClashX 的当前读取结果不能解释 Pro 名称，ClashX.Meta 的 README 文本也没有确认全部内核关系。因此本文不编项目接替、继承或官方迁移关系。项目名与页面能力只在有说明的范围内连接。
-
-同理，框架是 Electron 或 Tauri，不能单独给出最低 macOS 版本；某个项目可提供图形界面，也不决定它是否拥有其他项目的规则编辑方式。需要的栏目仍然是平台表、发布资料和功能说明，各自有原文才填入。
-
-本文整理的是 Mac 平台的目标项目核对资料，而不是把同一配置交给所有项目之后的比较。架构、系统门槛、安装形态、输入与运行状态没有被统一成一个保证。读者实际持有的文件未在本页得到检验。
-
-这种记录保留了来源中的差异：能确认的平台写平台，只有发布记录就写发布记录，没有官方页面的 Pro 能力继续写未说明。标题中的“怎么选”由这些具体栏目承担，不引入产品高低或效果定性。
-
-Mac 配置输入还可按目标文档的具体条件展开。Verge 对 URL Schemes 记有 Verge 2.0 以后的 macOS 支持，对拖拽文件则记至少 v1.6.2；这是两种入口的不同条件，不能只写“支持导入”就省去它们。历史功能门槛也不能替代当前最低 macOS 版本。
-
-本地文件进入 Verge 时会形成 profiles 中的副本，原件移动或删除不改变已复制文件；未选文件直接保存会创建空配置。这些是文件管理行为，不是旧客户端的导出规范，也不是本文已复制用户文件。没有真实输入时，不以目录名判断内容有效。
-
-FlClash 的界面资料列 Material You 风格、亮暗主题与自适应布局，桌面项另列托盘及快捷键。它们描述应用呈现，不从界面风格推断内核能力，也不承诺旧 Mac 菜单布局会保留。界面偏好与代理规则需要分别记录。
-
-项目构建资料要求 Flutter、Go、Rust，并由 setup.dart 处理，但没有可用原句将界面框架直接写成 Flutter。本文因此只把它当作源码构建要求，不替普通安装增加开发工具依赖。构建环境与发布包的系统要求不能互相代答。
-
-Verge 另有 WebDav 同步和配置管理增强，FlClash 也有本地备份恢复。两份介绍没有给出彼此备份格式的共同标准，所以本文不把云端同步当作跨项目迁移通道。保存方式相近，仍不足以确认数据互换。
-
-ClashX.Meta 的已读项目表记录 AGPL-3.0，Verge、FlClash 的资料分别写 GPL-3.0。这些条款名称各归对应项目，不替没有官方正文的 ClashX Pro 填许可，也不由许可相同推断备份、规则或脚本能够互用。
-
-## FAQ
-
-### 原 ClashX 当前到底是什么状态？
-
-所记录的仓库和发布源都返回 404。没有取得归档或发布资料，不能由返回码推定原因。
-
-### ClashX Pro 有哪些额外功能？
-
-官方页面资料没有写明。本文不以 Pro 名称推断功能或购买渠道。
-
-### Verge 的 Mac 门槛是 11 还是 12？
-
-README 写 11 起，安装文档写 12 起并另谈旧系统处理。两条表述同时保留，不由本文删去其中之一。
-
-### DMG 就是可以导入的配置吗？
-
-这里的 DMG 是应用发布形态。规则或订阅属于客户端输入，不能据文件都可下载就当作同一对象。
-
-### 旧客户端备份能直接恢复到 FlClash 吗？
-
-项目写有备份恢复功能，但没有取得对旧项目备份的兼容承诺。本文不宣称能直接恢复。
-
-### ClashX.Meta 的名字能证明内核关系吗？
-
-现有 README 文本没有明确对应说明。名称不代替内核声明，发布版本也不能补这段资料。
-
-### 安装 FlClash 发布包先要装构建工具吗？
-
-Flutter、Go、Rust 在资料中属于源码构建要求。本文没有把它们写成普通发布包的安装前置，也没有依据开发栈替 Mac 系统增加依赖条件。
-
-### Mac 的两种导入入口采用相同历史门槛吗？
-
-Verge 对 URL Schemes 和拖拽文件分别给出版本条件。它们属于不同入口，不能只写一个导入版本就覆盖两种功能，更不能把功能门槛误当最低操作系统。
-
-## 更新记录
-
-2026-10-23 重写
+**[⬆ 回到目录](#toc)**
